@@ -5,11 +5,19 @@ const headerInput = document.querySelector(".header-input");
 const todoList = document.querySelector(".todo-list");
 const todoCompleted = document.querySelector(".todo-completed");
 
-const todoData = JSON.parse(localStorage.getItem("todoData"));
+const parseTodoData = JSON.parse(localStorage.getItem("todoData"));
+let todoData = [];
+
+
 
 const render = function () {
   todoList.textContent = "";
   todoCompleted.textContent = "";
+
+  if (parseTodoData !== null) {
+    todoData = parseTodoData;
+  }
+
 
   todoData.forEach(function (item) {
     const li = document.createElement("li");
@@ -40,10 +48,12 @@ const render = function () {
     });
 
     btnTodoRemove.addEventListener("click", function () {
-      todoData.splice(item, 1);
+      const indexItem = todoData.indexOf(item);
+      todoData.splice(indexItem, 1);
       li.remove();
     });
   });
+
 };
 
 todoControl.addEventListener("submit", function (event) {
@@ -59,10 +69,14 @@ todoControl.addEventListener("submit", function (event) {
   } else {
     headerInput.value = "";
   }
+  console.log(todoData);
 });
 
 window.onbeforeunload = function () {
-  localStorage.todoData = JSON.stringify(todoData);
+  if (todoData.length > 0) {
+    localStorage.todoData = JSON.stringify(todoData);
+    console.log(localStorage.todoData = JSON.stringify(todoData));
+  }
 };
 
 render();
