@@ -4,11 +4,9 @@ const todoControl = document.querySelector(".todo-control");
 const headerInput = document.querySelector(".header-input");
 const todoList = document.querySelector(".todo-list");
 const todoCompleted = document.querySelector(".todo-completed");
-
 const parseTodoData = JSON.parse(localStorage.getItem("todoData"));
+
 let todoData = [];
-
-
 
 const render = function () {
   todoList.textContent = "";
@@ -51,6 +49,7 @@ const render = function () {
       const indexItem = todoData.indexOf(item);
       todoData.splice(indexItem, 1);
       li.remove();
+      localStorage.todoData = JSON.stringify(todoData);
     });
   });
 
